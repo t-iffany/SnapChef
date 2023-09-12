@@ -1,0 +1,5 @@
+# complied python bytecode files
+__pycache__/
+
+# virtual environment
+venv/
