@@ -1,6 +1,7 @@
 import { useState } from 'react'
 import './App.css'
 import CaptureButton from './CaptureButton'
+import Camera from './Camera'
 
 function App() {
   const [count, setCount] = useState(0)
@@ -10,7 +11,7 @@ function App() {
       <h1>Welcome to SnapChef!</h1>
       <div className="container">
         <p>Click the button to open the camera</p>
-        <CaptureButton />
+        <Camera />
       </div>
       <div className="card">
         <button onClick={() => setCount((count) => count + 1)}>
