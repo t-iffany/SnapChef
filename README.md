@@ -11,7 +11,7 @@ cd react-vite
 npm run dev
 ```
 
-3. Backend:
+2. Backend:
 
 ```console
 cd backend
