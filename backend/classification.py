@@ -1,5 +1,7 @@
 import tensorflow as tf
 import tensorflow_datasets as tfds
+import numpy as np
+import matplotlib.pyplot as plt
 
 # display the version of tensorflow
 print(tf.__version__)
@@ -16,3 +18,13 @@ print(tf.__version__)
 # find the class names in the metadata
 class_names = metadata.features['label'].names
 print(class_names)
+
+# retrieve an image from the dataset
+get_label_name = metadata.features['label'].int2str
+
+image, label = next(iter(train_ds))
+_ = plt.imshow(image)
+_ = plt.title(get_label_name(label))
+
+# display the image
+plt.show()
