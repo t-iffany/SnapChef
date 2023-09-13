@@ -1,6 +1,7 @@
 import { useState } from 'react'
 import './App.css'
 import Camera from './components/Camera'
+import ImgUpload from './components/ImgUpload'
 
 function App() {
   const [count, setCount] = useState(0)
@@ -11,6 +12,7 @@ function App() {
       <div className="container">
         <p>Click the button to open the camera</p>
         <Camera />
+        <ImgUpload />
       </div>
       <div className="card">
         <button onClick={() => setCount((count) => count + 1)}>
