@@ -52,7 +52,22 @@ function ImgUpload() {
     
     <>
       <div>
-        <button onClick={handleUpload}>Upload</button>
+        <form onSubmit={handleUpload}>
+          <input
+            id="inputTag"
+            className="choose-image"
+            type="file"
+            name="image"
+            onChange={handleFileSelect}
+            accept="image/*"
+          />
+        </form>
+        <button 
+          type="button"
+          onClick={handleUpload}
+        >
+          Upload
+        </button>
       </div>
       {state.imgResult}
     </>
