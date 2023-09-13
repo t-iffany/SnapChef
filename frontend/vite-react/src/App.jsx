@@ -1,7 +1,6 @@
 import { useState } from 'react'
 import './App.css'
-import CaptureButton from './CaptureButton'
-import Camera from './Camera'
+import Camera from './components/Camera'
 
 function App() {
   const [count, setCount] = useState(0)
