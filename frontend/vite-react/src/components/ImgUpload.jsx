@@ -58,7 +58,7 @@ function ImgUpload() {
           />
         ) : (
           <>
-            Image of Ingredients
+            {/* if we need a placeholder for text or img */}
           </>
         )}
       </div>
