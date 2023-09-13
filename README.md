@@ -16,4 +16,5 @@ npm run dev
 ```console
 cd backend
 Python3 app.py
+Python3 classification.py
 ```
