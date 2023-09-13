@@ -28,3 +28,21 @@ _ = plt.title(get_label_name(label))
 
 # display the image
 plt.show()
+
+# define parameters for the loader
+batch_size = 32
+
+# buffer preteching: when loading data, use: Dataset.cache and Dataset.prefetchAUTOTUNE = tf.data.AUTOTUNE
+AUTOTUNE = tf.data.AUTOTUNE
+
+# batch, shuffle, and configure the training, validation, and test sets for performance
+def configure_for_performance(ds):
+  ds = ds.cache()
+  ds = ds.shuffle(buffer_size=1000)
+  ds = ds.batch(batch_size)
+  ds = ds.prefetch(buffer_size=AUTOTUNE)
+  return ds
+
+train_ds = configure_for_performance(train_ds)
+val_ds = configure_for_performance(val_ds)
+test_ds = configure_for_performance(test_ds)
