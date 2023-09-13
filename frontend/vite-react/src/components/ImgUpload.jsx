@@ -6,10 +6,10 @@ function ImgUpload() {
     selectedImg: null,
     imgAsFile: null,
     imgResult: null,
-  })
+  });
 
   const handleFileSelect = (event) => {
-    console.log(event.target.files[0])
+    console.log(event.target.files[0]);
 
     setState({
       selectedImg: URL.createObjectURL(event.target.files[0]),
@@ -21,58 +21,68 @@ function ImgUpload() {
     event.preventDefault();
 
     const reader = new FileReader();
-    reader.readAsDataURL(state.imgAsFile)
+    reader.readAsDataURL(state.imgAsFile);
 
     reader.onload = () => {
       const base64Img = reader.result;
 
       axios
-        .post("http://127.0.0.1:5000/", 
-        JSON.stringify(base64Image)
-        , {
+        .post("http://127.0.0.1:5000/",
+          JSON.stringify(base64Image)
+          , {
             headers: {
-                "Content-Type": "application/json; charset=UTF-8",
+              "Content-Type": "application/json; charset=UTF-8",
             },
-        })
+          })
         .then((res) => {
-            console.log('res', res)
-            setState(prev => ({ ...prev, imageResult: res.data }))
-            document.querySelector("input[type='file']").value = "";
-            state.submitted(true);
+          console.log('res', res);
+          setState(prev => ({ ...prev, imageResult: res.data }));
+          document.querySelector("input[type='file']").value = "";
+          state.submitted(true);
         })
         .catch((err) => {
-            console.log(err);
+          console.log(err);
         });
 
-    }
+    };
 
-  }
+  };
 
   return (
-    
+
     <>
       <div>
-        <form onSubmit={handleUpload}>
-          <input
-            id="inputTag"
-            className="choose-image"
-            type="file"
-            name="image"
-            onChange={handleFileSelect}
-            accept="image/*"
+        {state.selectedImg ? (
+          <img
+            src={state.selectedImg}
           />
-        </form>
-        <button 
-          type="button"
-          onClick={handleUpload}
-        >
-          Upload
-        </button>
+        ) : (
+          <>
+            Image of Ingredients
+          </>
+        )}
       </div>
+
+      <form onSubmit={handleUpload}>
+        <input
+          id="inputTag"
+          className="choose-image"
+          type="file"
+          name="image"
+          onChange={handleFileSelect}
+          accept="image/*"
+        />
+      </form>
+      <button
+        type="button"
+        onClick={handleUpload}
+      >
+        Upload
+      </button>
       {state.imgResult}
     </>
 
-  )
+  );
 
 };
 
