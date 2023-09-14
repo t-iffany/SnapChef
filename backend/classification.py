@@ -111,3 +111,36 @@ def prepare(ds, shuffle=False, augment=False):
 train_ds = prepare(train_ds, shuffle=True, augment=True)
 val_ds = prepare(val_ds)
 test_ds = prepare(test_ds)
+
+# train a simple model using the datasets we just prepared
+# the Sequential model
+num_classes = 5
+
+model = tf.keras.Sequential([
+  layers.Conv2D(16, 3, padding='same', activation='relu'),
+  layers.MaxPooling2D(),
+  layers.Conv2D(32, 3, padding='same', activation='relu'),
+  layers.MaxPooling2D(),
+  layers.Conv2D(64, 3, padding='same', activation='relu'),
+  layers.MaxPooling2D(),
+  layers.Flatten(),
+  layers.Dense(128, activation='relu'),
+  layers.Dense(num_classes)
+])
+
+# Choose the tf.keras.optimizers.Adam optimizer and tf.keras.losses.SparseCategoricalCrossentropy loss function
+# To view training and validation accuracy for each training epoch, pass the metrics argument to Model.compile
+model.compile(optimizer='adam',
+              loss=tf.keras.losses.SparseCategoricalCrossentropy(from_logits=True),
+              metrics=['accuracy'])
+
+# train for a few epochs - default 5, I set to 2 b/c disk space
+epochs=2
+history = model.fit(
+  train_ds,
+  validation_data=val_ds,
+  epochs=epochs
+)
+
+loss, acc = model.evaluate(test_ds)
+print("Accuracy", acc)
