@@ -209,3 +209,22 @@ class RandomInvert(layers.Layer):
 _ = plt.imshow(RandomInvert()(image)[0])
 plt.show()
 
+# predict on new data
+# use our model to classify an image that wasn't included in the training or validation sets
+sunflower_url = "https://storage.googleapis.com/download.tensorflow.org/example_images/592px-Red_sunflower.jpg"
+sunflower_path = tf.keras.utils.get_file('Red_sunflower', origin=sunflower_url)
+
+img = tf.keras.utils.load_img(
+    sunflower_path, target_size=(IMG_SIZE, IMG_SIZE)
+)
+img_array = tf.keras.utils.img_to_array(img)
+img_array = tf.expand_dims(img_array, 0) # Create a batch
+
+predictions = model.predict(img_array)
+score = tf.nn.softmax(predictions[0])
+
+print(
+    "This image most likely belongs to {} with a {:.2f} percent confidence."
+    .format(class_names[np.argmax(score)], 100 * np.max(score))
+)
+
