@@ -3,6 +3,8 @@ import tensorflow_datasets as tfds
 import numpy as np
 import matplotlib.pyplot as plt
 
+from tensorflow.keras import layers
+
 # display the version of tensorflow
 print(tf.__version__)
 
@@ -46,3 +48,20 @@ def configure_for_performance(ds):
 train_ds = configure_for_performance(train_ds)
 val_ds = configure_for_performance(val_ds)
 test_ds = configure_for_performance(test_ds)
+
+# use Keras prepocessing layers
+
+# resizing and rescaling
+IMG_SIZE = 180
+
+resize_and_rescale = tf.keras.Sequential([
+  layers.Resizing(IMG_SIZE, IMG_SIZE),
+  layers.Rescaling(1./127.5, offset=-1)
+])
+
+# visualize the result of applying these layers to an image
+result = resize_and_rescale(image)
+_ = plt.imshow(result)
+
+# verify that the pixels are in the [-1, 1] range
+print("Min and max pixel values:", result.numpy().min(), result.numpy().max())
