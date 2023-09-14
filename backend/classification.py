@@ -144,3 +144,39 @@ history = model.fit(
 
 loss, acc = model.evaluate(test_ds)
 print("Accuracy", acc)
+
+# custom data augmentation layers
+# both layers will randomly invert the colors in an image, according to the same probability
+
+# create a tf.keras.layers.Lambda layer --> good way to write concise code
+def random_invert_img(x, p=0.5):
+  if  tf.random.uniform([]) < p:
+    x = (255-x)
+  else:
+    x
+  return x
+
+def random_invert(factor=0.5):
+  return layers.Lambda(lambda x: random_invert_img(x, factor))
+
+random_invert = random_invert()
+
+plt.figure(figsize=(10, 10))
+for i in range(9):
+  augmented_image = random_invert(image)
+  ax = plt.subplot(3, 3, i + 1)
+  plt.imshow(augmented_image[0].numpy().astype("uint8"))
+  plt.axis("off")
+  plt.show()
+
+# implement a new custom layer via subclassing, which gives you more control
+class RandomInvert(layers.Layer):
+  def __init__(self, factor=0.5, **kwargs):
+    super().__init__(**kwargs)
+    self.factor = factor
+
+  def call(self, x):
+    return random_invert_img(x)
+
+_ = plt.imshow(RandomInvert()(image)[0])
+plt.show()
