@@ -49,7 +49,7 @@ def configure_for_performance(ds):
 # val_ds = configure_for_performance(val_ds)
 # test_ds = configure_for_performance(test_ds)
 
-# use Keras prepocessing layers
+# using Keras prepocessing layers for data augmentation (instead of tf.image)
 
 # resizing and rescaling
 IMG_SIZE = 180
@@ -180,3 +180,4 @@ class RandomInvert(layers.Layer):
 
 _ = plt.imshow(RandomInvert()(image)[0])
 plt.show()
+
