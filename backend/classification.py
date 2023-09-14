@@ -228,3 +228,18 @@ print(
     .format(class_names[np.argmax(score)], 100 * np.max(score))
 )
 
+# define a function that takes an image as input, preprocesses it, and returns the classification results
+def classify_image(image):
+    # Resize and rescale the image
+    resized_image = tf.image.resize(image, (IMG_SIZE, IMG_SIZE))
+    preprocessed_image = tf.keras.applications.inception_v3.preprocess_input(resized_image)
+   
+    # Make a prediction using the loaded model
+    predictions = model.predict(tf.expand_dims(preprocessed_image, 0))
+   
+    # Process the predictions (e.g., find the class with the highest probability)
+    predicted_class = class_names[np.argmax(predictions)]
+    confidence = np.max(predictions)
+   
+    return predicted_class, confidence
+
