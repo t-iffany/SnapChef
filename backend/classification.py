@@ -113,8 +113,8 @@ val_ds = prepare(val_ds)
 test_ds = prepare(test_ds)
 
 # train a simple model using the datasets we just prepared
-# the Sequential model
-num_classes = 5
+# create the model - the Sequential model
+num_classes = len(class_names)
 
 model = tf.keras.Sequential([
   layers.Conv2D(16, 3, padding='same', activation='relu'),
@@ -128,13 +128,18 @@ model = tf.keras.Sequential([
   layers.Dense(num_classes)
 ])
 
+# compile the model
 # Choose the tf.keras.optimizers.Adam optimizer and tf.keras.losses.SparseCategoricalCrossentropy loss function
 # To view training and validation accuracy for each training epoch, pass the metrics argument to Model.compile
 model.compile(optimizer='adam',
               loss=tf.keras.losses.SparseCategoricalCrossentropy(from_logits=True),
               metrics=['accuracy'])
 
-# train for a few epochs - default 5, I set to 2 b/c disk space
+# model summary - view all the layers of the network using the Keras Model.summary method
+# code below doesn't work, says model hasn't been built yet
+# model.summary()   
+
+# train the model for a few epochs with the Keras Model.fit method - I set to 2 b/c disk space
 epochs=2
 history = model.fit(
   train_ds,
@@ -144,6 +149,29 @@ history = model.fit(
 
 loss, acc = model.evaluate(test_ds)
 print("Accuracy", acc)
+
+# visualize training results - create plots of the loss and accuracy on the training and validation sets
+acc = history.history['accuracy']
+val_acc = history.history['val_accuracy']
+
+loss = history.history['loss']
+val_loss = history.history['val_loss']
+
+epochs_range = range(epochs)
+
+plt.figure(figsize=(8, 8))
+plt.subplot(1, 2, 1)
+plt.plot(epochs_range, acc, label='Training Accuracy')
+plt.plot(epochs_range, val_acc, label='Validation Accuracy')
+plt.legend(loc='lower right')
+plt.title('Training and Validation Accuracy')
+
+plt.subplot(1, 2, 2)
+plt.plot(epochs_range, loss, label='Training Loss')
+plt.plot(epochs_range, val_loss, label='Validation Loss')
+plt.legend(loc='upper right')
+plt.title('Training and Validation Loss')
+plt.show()
 
 # custom data augmentation layers
 # both layers will randomly invert the colors in an image, according to the same probability
