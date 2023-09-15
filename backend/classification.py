@@ -2,6 +2,9 @@ import tensorflow as tf
 import tensorflow_datasets as tfds
 import numpy as np
 import matplotlib.pyplot as plt
+import matplotlib
+matplotlib.use('Agg')  # Use the Agg backend which doesn't require a GUI
+
 
 from tensorflow.keras import layers
 
@@ -25,11 +28,11 @@ print(class_names)
 get_label_name = metadata.features['label'].int2str
 
 image, label = next(iter(train_ds))
-_ = plt.imshow(image)
+# _ = plt.imshow(image)
 _ = plt.title(get_label_name(label))
 
 # display the image
-plt.show()
+# plt.show()
 
 # define parameters for the loader
 batch_size = 32
@@ -61,8 +64,8 @@ resize_and_rescale = tf.keras.Sequential([
 
 # visualize the result of applying these layers to an image
 result = resize_and_rescale(image)
-_ = plt.imshow(result)
-plt.show()
+# _ = plt.imshow(result)
+# plt.show()
 
 # verify that the pixels are in the [-1, 1] range
 print("Min and max pixel values:", result.numpy().min(), result.numpy().max())
@@ -82,9 +85,9 @@ plt.figure(figsize=(10, 10))
 for i in range(9):
   augmented_image = data_augmentation(image)
   ax = plt.subplot(3, 3, i + 1)
-  plt.imshow(augmented_image[0])
+  # plt.imshow(augmented_image[0])
   plt.axis("off")
-  plt.show()
+  # plt.show()
 
 # apply the preprocessing layers to the datasets
 # data augmentation should only be applied to the training set
@@ -171,7 +174,7 @@ plt.plot(epochs_range, loss, label='Training Loss')
 plt.plot(epochs_range, val_loss, label='Validation Loss')
 plt.legend(loc='upper right')
 plt.title('Training and Validation Loss')
-plt.show()
+# plt.show()
 
 # custom data augmentation layers
 # both layers will randomly invert the colors in an image, according to the same probability
@@ -193,9 +196,9 @@ plt.figure(figsize=(10, 10))
 for i in range(9):
   augmented_image = random_invert(image)
   ax = plt.subplot(3, 3, i + 1)
-  plt.imshow(augmented_image[0].numpy().astype("uint8"))
+  # plt.imshow(augmented_image[0].numpy().astype("uint8"))
   plt.axis("off")
-  plt.show()
+  # plt.show()
 
 # implement a new custom layer via subclassing, which gives you more control
 class RandomInvert(layers.Layer):
@@ -206,8 +209,8 @@ class RandomInvert(layers.Layer):
   def call(self, x):
     return random_invert_img(x)
 
-_ = plt.imshow(RandomInvert()(image)[0])
-plt.show()
+# _ = plt.imshow(RandomInvert()(image)[0])
+# plt.show()
 
 # predict on new data
 # use our model to classify an image that wasn't included in the training or validation sets
