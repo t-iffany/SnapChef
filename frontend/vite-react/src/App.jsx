@@ -10,7 +10,6 @@ function App() {
     <>
       <h1>Welcome to SnapChef!</h1>
       <div>
-        {/* <p>Click the button to open the camera</p> */}
         <Camera />
       </div>
       <div>
