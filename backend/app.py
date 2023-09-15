@@ -35,14 +35,6 @@ def capture_image():
 @app.route('/classify-image', methods=['POST'])
 def classify():
     try:
-        # # Check if the request is JSON
-        # if request.content_type != 'application/json':
-        #     return jsonify({'error': 'Invalid content type, expected application/json'}), 400
-
-        # # Check if an image file is present in the request
-        # if 'image' not in request.json:
-        #     return jsonify({'error': 'No image part'}), 400
-
 
         req = request.get_json("image")
         req = req.split(',')[1]
@@ -55,50 +47,6 @@ def classify():
 
         # convert img_np to path format for t.keras to use
         img_path = "imgToSave.jpg"
-
-        # data = request.get_json()
-        # base64_image = data.get("image")
-
-        # # Decode the base64 image to bytes
-        # image_data = base64.b64decode(base64_image)
-
-        # # Save the image to a file (you can use a unique filename)
-        # with open("uploaded_image.jpg", "wb") as image_file:
-        #     image_file.write(image_data)
-         
-        
-        
-        # # access the image file from request.files
-        # image_file = request.files['image']
-
-        # # Process the image file using BytesIO
-        # image = BytesIO(image_file.read())
-        # print(image)
-
-        # # Make sure the file has an allowed extension (e.g., '.jpg' or '.png')
-        # allowed_extensions = {'jpg', 'jpeg', 'png'}
-        # if '.' not in image.name or image.name.rsplit('.', 1)[1].lower() not in allowed_extensions:
-        #     return jsonify({'error': 'Invalid file format'})
-
-
-
-
-
-        # # Get the uploaded image file as a BytesIO object
-        # image_file = request.files.get['image']
-
-        # # Process the image file using BytesIO
-        # image = BytesIO(image_file.read())
-        # print(image)
-
-        # # Get the file extension from the frontend
-        # file_extension = request.form.get('extension')
-
-        # # Check if the file extension is allowed
-        # allowed_extensions = {'jpg', 'jpeg', 'png'}
-
-        # if not file_extension or file_extension.lower() not in allowed_extensions:
-        #     return jsonify({'error': 'Invalid file format'})
 
         from classification import classify_image
 
