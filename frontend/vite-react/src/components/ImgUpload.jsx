@@ -6,6 +6,7 @@ function ImgUpload() {
     selectedImg: null,
     imgAsFile: null,
     imgResult: null,
+    isAnalyzing: false,
   });
 
   const handleFileSelect = (event) => {
@@ -27,6 +28,9 @@ function ImgUpload() {
       return;
     }
 
+    // set isAnalyzing to true while waiting for the response
+    setState((prev) => ({ ...prev, isAnalyzing: true }));
+
     const reader = new FileReader();
     reader.readAsDataURL(state.imgAsFile);
 
@@ -47,13 +51,14 @@ function ImgUpload() {
               class: res.data.class,
               confidence: res.data.confidence,
             },
+            isAnalyzing: false, // set isAnalyzing to false after response from backend is complete
           }));
           console.log('res.data: ', res.data);
           document.querySelector("input[type='file']").value = "";
-          // state.submitted(true);
         })
         .catch((err) => {
           console.log('Error uploading and classifying the image: ', err);
+          setState((prev) => ({ ...prev, isAnalyzing: false }));
         });
 
     };
@@ -66,10 +71,30 @@ function ImgUpload() {
     <>
       <div>
         {state.selectedImg ? (
-          <img
-            src={state.selectedImg}
-            alt="Image selected"
-          />
+          <div>
+            {state.isAnalyzing ? (
+              <p>...Analyzing</p>
+            ) : (
+              // <img
+              //   src={state.selectedImg}
+              //   alt="Image selected"
+              //   style={{ maxWidth: '200px' }} // Set a maximum width for the image
+              // />
+              <>
+                <img
+                  src={state.selectedImg}
+                  alt="Image selected"
+                  style={{ maxWidth: '200px' }} // Set a maximum width for the image
+                />
+                {state.imgResult && state.imgResult.class && (
+                  <p>
+                    Predicted Class: {state.imgResult.class}, Confidence:{" "}
+                    {state.imgResult.confidence.toFixed(2)}%
+                  </p>
+                )}
+              </>
+            )}
+          </div>
         ) : (
           <>
             <p>Select an image</p>
@@ -93,7 +118,7 @@ function ImgUpload() {
           Upload
         </button>
       </form>
-      <div>
+      {/* <div>
         {state.imgResult && state.imgResult.error && (
           <p>{state.imgResult.error}</p>
         )}
@@ -103,7 +128,7 @@ function ImgUpload() {
             {state.imgResult.confidence.toFixed(2)}%
           </p>
         )}
-      </div>
+      </div> */}
     </>
 
   );
