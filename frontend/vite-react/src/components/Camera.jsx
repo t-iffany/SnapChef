@@ -13,6 +13,7 @@ function Camera() {
       const stream = await navigator.mediaDevices.getUserMedia({ video: true });
       console.log('Camera Stream:', stream);
       setCameraStream(stream);
+      videoRef.current.srcObject = stream; // Assign the stream to the video element
     } catch (error) {
       console.error('Error accessing camera:', error);
     }
@@ -39,7 +40,6 @@ function Camera() {
   // render the component
   return (
     <div>
-      <h1>Camera Capture</h1>
       {cameraStream ? (
         <>
           <video ref={videoRef} autoPlay playsInline style={{ width: '100%', height: 'auto' }} />
