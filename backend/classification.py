@@ -13,9 +13,10 @@ print(tf.__version__)
 
 # load the Flowers dataset using TensorFlow Datasets
 (train_ds, val_ds, test_ds), metadata = tfds.load(
-    'tf_flowers',
+    'plant_village',
     # split=['train[:80%]', 'train[80%:90%]', 'train[90%:]'],
-    split=['train[:5%]', 'train[5%:6%]', 'train[6%:7%]'], # using 5% of dataset b/c low storage
+    # split=['train[:5%]', 'train[5%:6%]', 'train[6%:7%]'], # using 5% of dataset b/c low storage
+    split=['train[:1%]', 'train[1%:2%]', 'train[2%:3%]'],
     with_info=True,
     as_supervised=True,
 )

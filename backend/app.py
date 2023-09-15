@@ -7,7 +7,6 @@ import tensorflow as tf
 import base64
 import numpy as np
 from pathlib import Path
-# from classification import classify_image
 
 # create a Flask web application instance called 'app'
 app = Flask(__name__)
@@ -101,6 +100,7 @@ def classify():
         # if not file_extension or file_extension.lower() not in allowed_extensions:
         #     return jsonify({'error': 'Invalid file format'})
 
+        from classification import classify_image
 
         # Read the image file and convert it to a format compatible with TensorFlow
         image_data = tf.keras.utils.load_img(img_path, target_size=(IMG_SIZE, IMG_SIZE))
@@ -108,6 +108,9 @@ def classify():
 
         # Classify the image using the classification function from classification.py
         predicted_class, confidence = classify_image(image_array)
+
+        # convert the confidence (a NumPy array) to a Python list
+        confidence = confidence.tolist()
 
         # Print the classification results to the console
         print(f'Predicted Class: {predicted_class}')
