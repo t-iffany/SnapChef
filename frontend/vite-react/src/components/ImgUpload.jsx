@@ -86,7 +86,13 @@ function ImgUpload() {
         })
         .then((res) => {
           console.log('res', res);
-          setState((prev) => ({ ...prev, imgResult: res.data }));
+          setState((prev) => ({ 
+            ...prev, 
+            imgResult: {
+              class: res.data.class,
+              confidence: res.data.confidence,
+            },
+          }));
           console.log('res.data: ', res.data);
           document.querySelector("input[type='file']").value = "";
           // state.submitted(true);
@@ -98,6 +104,20 @@ function ImgUpload() {
       // reader.readAsDataURL(state.imgAsFile);
 
     };
+
+      // // Check if the response contains the expected data
+      // if (response.data && response.data.predicted_class && response.data.confidence) {
+      //   // handle the response from the backend
+      //   const { predicted_class, confidence } = response.data;
+
+      //   setState((prev) => ({
+      //     ...prev,
+      //     imgResult: `Predicted Class: ${predicted_class}, Confidence: ${confidence.toFixed(2)}`,
+      //   }));
+      //   } else {
+      //   console.error('Invalid response format from the backend:', response.data);
+      // }
+     
 
   };
 
@@ -171,9 +191,9 @@ function ImgUpload() {
         {state.imgResult && state.imgResult.error && (
           <p>{state.imgResult.error}</p>
         )}
-        {state.imgResult && state.imgResult.predicted_class && (
+        {state.imgResult && state.imgResult.class && (
           <p>
-            Predicted Class: {state.imgResult.predicted_class}, Confidence:{" "}
+            Predicted Class: {state.imgResult.class}, Confidence:{" "}
             {state.imgResult.confidence.toFixed(2)}%
           </p>
         )}
