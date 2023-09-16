@@ -8,7 +8,12 @@ function App() {
 
   return (
     <>
-      <h1>Welcome to SnapChef!</h1>
+      <h1>Welcome to SnapChef! 
+        <img 
+          src="https://img.icons8.com/color/96/soup-plate.png"
+          style={{ marginBottom: '-12px' }}
+        />
+      </h1>
 
       <div>
         <ImgUpload />
