@@ -84,13 +84,13 @@ function ImgUpload() {
                 <img
                   src={state.selectedImg}
                   alt="Image selected"
-                  style={{ maxWidth: '500px', borderRadius: '10px' }} // Set a maximum width for the image
+                  style={{ maxWidth: '400px', borderRadius: '10px' }} // Set a maximum width for the image
                 />
                 {state.imgResult && state.imgResult.class && (
-                  <p>
-                    Predicted Class: {state.imgResult.class}, Confidence:{" "}
-                    {state.imgResult.confidence.toFixed(2)}%
-                  </p>
+                  <div>
+                    <p><b>Predicted Class:</b> {state.imgResult.class} </p>
+                    <p style={{ marginTop: '-20px' }}><b>Confidence:</b> {state.imgResult.confidence.toFixed(2)}%</p>
+                  </div>
                 )}
               </>
             )}
@@ -99,7 +99,7 @@ function ImgUpload() {
           <>
             <img
               src="https://cdn.stocksnap.io/img-thumbs/960w/cooking-food_CFBFE8F090.jpg"
-              style={{ maxWidth: '500px', borderRadius: '10px' }}
+              style={{ maxWidth: '400px', borderRadius: '10px' }}
             />
             <p>Select an image to upload</p>
           </>
